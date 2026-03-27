@@ -15,11 +15,17 @@ Expense/finance tracker starter app built with React 19 + Vite 7. Single-page ap
 
 ## Architecture
 
-The entire app lives in a single `App` component (`src/App.jsx`) with all state managed via `useState` hooks. There are no child components, no routing, and no external state management. Styles are split between `src/App.css` (component styles) and `src/index.css` (global styles).
+React SPA with no routing or external state management. All state is managed via `useState` hooks. Styles are split between `src/App.css` (component styles) and `src/index.css` (global styles).
+
+- **App** (`src/App.jsx`) — Root component, owns the `transactions` array state and seed data.
+- **Summary** (`src/Summary.jsx`) — Computes and displays `totalIncome`, `totalExpenses`, and `balance` from the transactions prop.
+- **TransactionForm** (`src/TransactionForm.jsx`) — Owns form state, calls `onAddTransaction` callback to add new transactions.
+- **TransactionList** (`src/TransactionList.jsx`) — Owns filter state, renders filtered transaction table.
+
+Categories are defined locally in both `TransactionForm` and `TransactionList`.
 
 ## Known Issues
 
-- Transaction amounts are stored as strings, causing summary calculations (totalIncome, totalExpenses, balance) to concatenate instead of sum.
 - "Freelance Work" seed data is typed as "expense" instead of "income".
 
 ## Lint Rules
