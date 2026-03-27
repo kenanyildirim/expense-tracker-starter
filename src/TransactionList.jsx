@@ -2,9 +2,10 @@ import { useState } from 'react';
 
 const categories = ["food", "housing", "utilities", "transport", "entertainment", "salary", "other"];
 
-function TransactionList({ transactions }) {
+function TransactionList({ transactions, onDeleteTransaction }) {
   const [filterType, setFilterType] = useState("all");
   const [filterCategory, setFilterCategory] = useState("all");
+  const [deleteId, setDeleteId] = useState(null);
 
   let filteredTransactions = transactions;
   if (filterType !== "all") {
@@ -38,7 +39,7 @@ function TransactionList({ transactions }) {
             <th>Description</th>
             <th>Category</th>
             <th>Amount</th>
-
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -50,11 +51,25 @@ function TransactionList({ transactions }) {
               <td className={t.type === "income" ? "income-amount" : "expense-amount"}>
                 {t.type === "income" ? "+" : "-"}${t.amount}
               </td>
-
+              <td>
+                <button onClick={() => setDeleteId(t.id)}>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {deleteId !== null && (
+        <div className="modal-overlay" onClick={() => setDeleteId(null)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <p>Are you sure you want to delete this transaction?</p>
+            <div className="modal-actions">
+              <button onClick={() => setDeleteId(null)}>Cancel</button>
+              <button className="delete-confirm-btn" onClick={() => { onDeleteTransaction(deleteId); setDeleteId(null); }}>Delete</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

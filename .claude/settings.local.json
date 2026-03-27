@@ -4,7 +4,8 @@
       "Bash(claude -v)",
       "Bash(claude --version)",
       "Bash(npm install:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(npx eslint:*)"
     ]
   }
 }
