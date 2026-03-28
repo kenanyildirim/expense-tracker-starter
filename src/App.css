@@ -141,6 +141,10 @@
   color: var(--balance-blue);
 }
 
+.balance-amount.negative {
+  color: var(--expense-rose);
+}
+
 /* ─── Card Sections ─── */
 
 .spending-chart,
@@ -191,6 +195,30 @@ form {
   align-items: center;
 }
 
+.form-field {
+  display: contents;
+}
+
+.form-error {
+  margin-top: 10px;
+  color: var(--expense-rose);
+  font-size: 13px;
+  font-weight: 500;
+  animation: slideDown 0.2s ease both;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 form input,
 form select {
   padding: 12px 14px;
@@ -229,7 +257,7 @@ form select option {
   color: var(--text-primary);
 }
 
-form button {
+.add-transaction button[type="submit"] {
   padding: 12px 24px;
   background: var(--accent-blue);
   color: #fff;
@@ -243,13 +271,13 @@ form button {
   white-space: nowrap;
 }
 
-form button:hover {
+.add-transaction button[type="submit"]:hover {
   background: #5280e8;
   box-shadow: 0 4px 16px rgba(99, 145, 255, 0.3);
   transform: translateY(-1px);
 }
 
-form button:active {
+.add-transaction button[type="submit"]:active {
   transform: translateY(0);
 }
 
@@ -434,14 +462,14 @@ td:first-child {
   background: var(--bg-card-hover);
 }
 
-.delete-confirm-btn {
-  background: var(--expense-rose) !important;
-  color: #fff !important;
-  border-color: var(--expense-rose) !important;
+.modal-actions .delete-confirm-btn {
+  background: var(--expense-rose);
+  color: #fff;
+  border-color: var(--expense-rose);
 }
 
-.delete-confirm-btn:hover {
-  background: #ef4444 !important;
+.modal-actions .delete-confirm-btn:hover {
+  background: #ef4444;
   box-shadow: 0 4px 16px rgba(248, 113, 113, 0.3);
 }
 
@@ -466,11 +494,11 @@ td:first-child {
     grid-template-columns: 1fr 1fr;
   }
 
-  form input[type="text"] {
+  .form-field:first-child {
     grid-column: 1 / -1;
   }
 
-  form button {
+  .add-transaction button[type="submit"] {
     grid-column: 1 / -1;
   }
 
@@ -484,5 +512,27 @@ td:first-child {
 
   td, thead th {
     padding: 10px 12px;
+  }
+}
+
+/* ─── Reduced Motion ─── */
+
+@media (prefers-reduced-motion: reduce) {
+  .app,
+  .summary-card,
+  .spending-chart,
+  .add-transaction,
+  .transactions,
+  .modal-overlay,
+  .modal,
+  .form-error {
+    animation: none;
+  }
+
+  .summary-card,
+  .add-transaction button[type="submit"],
+  .delete-btn,
+  tbody tr {
+    transition: none;
   }
 }

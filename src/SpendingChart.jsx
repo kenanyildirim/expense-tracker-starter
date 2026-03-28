@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 const CATEGORY_COLORS = {
@@ -33,24 +34,31 @@ function CustomTooltip({ active, payload, label }) {
 }
 
 function SpendingChart({ transactions }) {
-  const expensesByCategory = transactions
-    .filter(t => t.type === 'expense')
-    .reduce((acc, t) => {
-      acc[t.category] = (acc[t.category] || 0) + t.amount;
-      return acc;
-    }, {});
+  const data = useMemo(() => {
+    const expensesByCategory = transactions
+      .filter(t => t.type === 'expense')
+      .reduce((acc, t) => {
+        acc[t.category] = (acc[t.category] || 0) + t.amount;
+        return acc;
+      }, {});
 
-  const data = Object.entries(expensesByCategory).map(([name, value]) => ({
-    name,
-    value,
-  }));
+    return Object.entries(expensesByCategory).map(([name, value]) => ({
+      name,
+      value,
+    }));
+  }, [transactions]);
 
   if (data.length === 0) {
-    return null;
+    return (
+      <div className="spending-chart" role="region" aria-label="Spending by category chart">
+        <h2>Spending by Category</h2>
+        <p className="empty-state">No expense data to display.</p>
+      </div>
+    );
   }
 
   return (
-    <div className="spending-chart">
+    <div className="spending-chart" role="region" aria-label="Spending by category chart">
       <h2>Spending by Category</h2>
       <ResponsiveContainer width="100%" height={280}>
         <BarChart data={data} barSize={40} margin={{ top: 8, right: 8, bottom: 8, left: -12 }}>
