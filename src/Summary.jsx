@@ -12,16 +12,25 @@ function Summary({ transactions }) {
   return (
     <div className="summary">
       <div className="summary-card">
-        <h3>Income</h3>
-        <p className="income-amount">${totalIncome}</p>
+        <div className="card-label">
+          <span className="card-icon income">&#8593;</span>
+          Income
+        </div>
+        <p className="income-amount">${totalIncome.toLocaleString()}</p>
       </div>
       <div className="summary-card">
-        <h3>Expenses</h3>
-        <p className="expense-amount">${totalExpenses}</p>
+        <div className="card-label">
+          <span className="card-icon expense">&#8595;</span>
+          Expenses
+        </div>
+        <p className="expense-amount">${totalExpenses.toLocaleString()}</p>
       </div>
       <div className="summary-card">
-        <h3>Balance</h3>
-        <p className="balance-amount">${balance}</p>
+        <div className="card-label">
+          <span className="card-icon balance">&#9878;</span>
+          Balance
+        </div>
+        <p className="balance-amount">${balance.toLocaleString()}</p>
       </div>
     </div>
   );

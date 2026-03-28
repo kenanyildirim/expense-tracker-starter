@@ -32,32 +32,40 @@ function TransactionList({ transactions, onDeleteTransaction }) {
         </select>
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Amount</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredTransactions.map(t => (
-            <tr key={t.id}>
-              <td>{t.date}</td>
-              <td>{t.description}</td>
-              <td>{t.category}</td>
-              <td className={t.type === "income" ? "income-amount" : "expense-amount"}>
-                {t.type === "income" ? "+" : "-"}${t.amount}
-              </td>
-              <td>
-                <button onClick={() => setDeleteId(t.id)}>Delete</button>
-              </td>
+      {filteredTransactions.length === 0 ? (
+        <div className="empty-state">No transactions found</div>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th></th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredTransactions.map(t => (
+              <tr key={t.id}>
+                <td>{t.date}</td>
+                <td>{t.description}</td>
+                <td>
+                  <span className={`category-badge ${t.category}`}>
+                    {t.category}
+                  </span>
+                </td>
+                <td className={`amount-cell ${t.type}`}>
+                  {t.type === "income" ? "+" : "-"}${t.amount.toLocaleString()}
+                </td>
+                <td>
+                  <button className="delete-btn" onClick={() => setDeleteId(t.id)}>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
 
       {deleteId !== null && (
         <div className="modal-overlay" onClick={() => setDeleteId(null)}>
